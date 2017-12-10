@@ -225,11 +225,11 @@ function scatterPlot3d( parent )
       .append("polyline2d")
         .attr("lineSegments", function(row) { return "0 1, 0 0"; })
 
-    stems.transition().ease(ease).duration(duration)
-        .attr("translation", 
-           function(row) { return x(row[axisKeys[0]]) + " 0 " + z(row[axisKeys[2]]); })
-        .attr("scale",
-           function(row) { return [1, y(row[axisKeys[1]])]; })
+    // stems.transition().ease(ease).duration(duration)
+    //     .attr("translation", 
+    //        function(row) { return x(row[axisKeys[0]]) + " 0 " + z(row[axisKeys[2]]); })
+    //     .attr("scale",
+    //        function(row) { return [1, y(row[axisKeys[1]])]; })
   }
 
   function initializeDataGrid() {
@@ -251,7 +251,7 @@ function scatterPlot3d( parent )
         var z = rows[r].z;
         rows[r].y = 5*( Math.sin(0.5*x + time) * Math.cos(0.25*z + time));
       }
-      plotData( defaultDuration );
+      
     } else {
       console.log('x3d not ready.');
     }
@@ -259,5 +259,6 @@ function scatterPlot3d( parent )
 
   initializeDataGrid();
   initializePlot();
-  setInterval( updateData, defaultDuration );
+  plotData( defaultDuration );
+  // setInterval( updateData, defaultDuration );
 }
