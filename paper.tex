@@ -1,19 +1,25 @@
 \documentclass[12pt]{article}
  
-\usepackage[margin=1in]{geometry} 
+\usepackage[margin=1.15in]{geometry} 
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{tikz}
 \usepackage[linguistics]{forest}
 \usepackage{booktabs}
-\usepackage{parskip}% http://ctan.org/pkg/parskip
-\usepackage{pgfplots}
+% \usepackage{parskip}% http://ctan.org/pkg/parskip
+% \usepackage{pgfplots}
 \usepackage{amsmath}
 \usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage[linguistics]{forest}
+
+\usetikzlibrary{arrows,automata,positioning}
 
 \pagenumbering{arabic}
 
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
+
+% \let\pgfmathMod=\pgfmathmod\relax
 
 \newenvironment{theorem}[2][Theorem]{\begin{trivlist}
 \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
@@ -51,13 +57,13 @@
   {\scshape\LARGE Wellesley College \par}
   \vspace{1cm}
   {\scshape\Large Economics Independent Study final paper\par}
-  \vspace{2.5cm}
+  \vspace{3cm}
   {\huge\bfseries Models of Kidnap for Ransom Insurance\par}
-  \vspace{2cm}
-  {\Large\itshape Suzanne Wang\par}
+  \vspace{2.5cm}
+  {\Large Suzanne Wang\par}
 %   \vfill
   supervised by\par
-  Casey Rothschild
+    {\large Casey Rothschild\par}
 
   \vfill
 
@@ -67,107 +73,154 @@
 
 \section{Introduction}
 
-Kidnapping for ransom is common in many developing countries. In recent years, annual ransom payments have totaled over \$1.5 billion (Catlins, 2012). Seen now as a necessary cost of doing business, most large companies purchase kidnap for ransom (K \& R) insurance to cover the risk for their staff in high risk areas (Economist, 2013). These insurance plans cover ransom payment to criminal kidnappers and hiring of consultants and negotiators, among other associated costs (). Recent research shows that kidnapping insurance is organized under a single governing body, Lloyd's of London, which enables firms to internalize the externalities from poorly managed insurance (Shortland, 2016). While research has examined game-theoretical models of kidnapping and insurance, kidnapping insurance has not been explored theoretically in a context of the unique private governance structure of the Lloyd's market. We address this gap in the literature.
+Kidnapping for ransom is common in many developing countries. In recent years, annual recorded ransom payments have totaled over \$1.5 billion globally (Catlins, 2012). Seen now as a necessary cost of doing business, most large companies purchase kidnap for ransom insurance to cover their staff working in high risk areas (Economist, 2013). These insurance plans cover ransom payment to criminal kidnappers and hiring of consultants and negotiators, among other associated costs (). Recent research shows that kidnapping insurance is organized under a single governing body, Lloyd's of London, which enables firms to internalize the externalities from poorly managed insurance (Shortland, 2016). While research has examined game-theoretical models of kidnapping and insurance, kidnapping insurance has not been explored theoretically in a context of the unique private governance structure that is the Lloyd's market. We address this gap in the literature.
 
-In media coverage of kidnaps for ransom, acts of terrorism and piracy are often the most visible. Terrorist kidnappings are not insurable, and many countries have no concessions policies which make it illegal to pay ransoms to terrorists. Terrorist kidnaps are often highly public, with million dollar ransoms and clear threats of violence. Though countries such as the UK, US, and Canada forbid paying terrorists (), ransoms are still often paid by the victim's family or myopic governments without no-concessions policies. Paying ransoms fund future terrorist activity, resulting in significant externalities. Indeed, research shows that between 2001-2013, negotiation successes with terrorist kidnappers increased kidnappings by 64-87\% by those groups (Brandt et al., 2016). [TODO: insert research about ineffectiveness of no-concessions policies] Piracy, another highly visible example of kidnapping for ransom, has also resulted in significant spillover effects. Unlike terrorist kidnappings, maritime piracy can be covered by insurance. Before 2001, insurance covering piracy was rare and negotiation by inexperienced parties resulted in high ransoms (Shortland, 2016). In Somalia, pirate ransoms have moved from the thousands to up to \$12 million between 2000 to 2012, with a steady upward trend and increase in frequency (De Groot et al., 2012). [TODO: represent this better] Like with terrorists kidnappings, knowledge surrounding the successful kidnaps and premium ransoms quickly spreads through the criminal community, leading to more groups to enter the market with high expectations. As a result of such high costs, many insurers suffered heavy losses, and some withdrew from the market entirely (World Bank, 2013).
+In media coverage of kidnaps for ransom, acts of terrorism and piracy are often the most visible. Terrorist kidnappings are not insurable, and many countries have no concessions policies which make it illegal to pay ransoms to terrorists. Terrorist kidnaps are often highly public, with million dollar ransoms and clear threats of violence. Though countries such as the UK, US, and Canada forbid paying terrorists (), ransoms are still often paid by the victim's family or myopic governments without no-concessions policies. Paying ransoms fund future terrorist activity, resulting in significant externalities. Indeed, research shows that between 2001-2013, negotiation successes with terrorist kidnappers increased kidnappings by 64-87\% by those groups (Brandt et al., 2016). [TODO: insert research about ineffectiveness of no-concessions policies] 
 
-Unlike terrorists and pirates, land-based criminal kidnaps are both insurable and reasonably stable in ransom quantity and price. While ransoms are often perceived to be vast amounts of money demanded alongside violent threats, that is hardly the case overall when looking at criminal kidnaps, which comprise 80\% of total kidnappings globally (Shortland 2016). Ransom amounts rarely exceed six-figures, much less \$1 million, generally hovering in the thousands or tens of thousands (Catlins 2012). According to Control Risks, a business risk consultancy retained by insurers, the median ransom in Nigeria out of 200 cases between 2006-2014 was less than \$5,500 (Control Risks 2015). Between 2000 and 2014, the rate of death for hostages was 0.5\%, and often the result of pre-existing medical conditions or rescue and escape attempts. According to multiple interviews, murder is highly unusual (Shortland 2017). This striking relative stability of criminal kidnappings is a result of having a competitive market of insurers under one governing body. [TODO: insert footnote about how kidnappings are underreported] 
+Piracy, another highly visible example of kidnapping for ransom, has also resulted in significant spillover effects. Unlike terrorist kidnappings, maritime piracy can be covered by insurance. While ransom levels were in the thousands in the early 2000s, piracy ransoms in Somalia skyrocketed to the millions in subsequent years, reaching a high of \$12 million in 2011 (De Groot et al., 2012). The high prices also contributed to an increase in frequency: Oceans Beyond Piracy estimates that Somali piracy cost about \$1.7 billion in 2016, while the World Bank estimates that it costs around \$18 billion to the economy when factoring costs such as changing shipping routes and paying high insurance premiums (World Bank, 2013). Like with terrorists kidnappings, knowledge surrounding the successful kidnaps and premium ransoms quickly spreads through the criminal community, leading to more groups to enter the market with high expectations. As a result of such high costs, many insurers suffered heavy losses, and some withdrew from the market entirely (World Bank, 2013), while other insurers sought naval protection and higher security from third parties (Shortland 2015). Though the economic cost of piracy has decreased in recent years (Oceans Beyond Piracy), the lack of price discipline has maintained a consistent frequency. []
 
-Recent research has shown that there is just a single source of kidnap insurance globally: Lloyd's of London (Shortland, 2016). While the market appears to be highly competitive, with about 20 insurers competing for business, they are all connected to Lloyd's in some way. Lloyd's is not an insurance company, but an insurance market where members join together as syndicates. For example, brokers and coverholders act on behalf of potential customers and work with underwriters in the Lloyd's Underwriting Room to obtain quotes. Each syndicate's underwriters price the risk and decide what will be covered. Members of Lloyd's provide capital, which Lloyd's holds in trust. These firms operated based on strict rules, that set Lloyd's as a governing body. The information sharing within Lloyd's provides huge value to its syndicates, and is crucial for business. Each syndicate has 1-2 kidnap specialists who develop deep knowledge in a ``boy-to-man'' profession. Since the underwriters are physically congregated in an underwriting room, syndicates can share information in passing and over lunch (Shortland, 2017). However, information sharing is extremely limited outside of Lloyd's (Guardian, 2014). Membership in Lloyd's is renewed each year, and Lloyd's can close any syndicate that acts against the market's interest. As a result, the syndicates adopt consistent practices that do not jeopardize their membership in Lloyd's (Stringham, 2015).
+Unlike terrorists and pirates, land-based criminal kidnaps are both insurable and reasonably stable in ransom quantity and price. While ransoms are often perceived to be vast amounts of money demanded alongside violent threats, that is hardly the case overall when looking at criminal kidnaps, which comprise 80\% of total kidnappings globally (Shortland 2016). Ransom amounts rarely exceed six-figures, much less \$1 million, generally hovering in the thousands or tens of thousands (Catlins 2012). According to Control Risks, a business risk consultancy retained by insurers, the median ransom in Nigeria out of 200 cases between 2006-2014 was less than \$5,500 (Control Risks 2015). Between 2000 and 2014, the rate of death for hostages was 0.5\%, caused most often by pre-existing medical conditions or rescue and escape attempts. According to multiple interviews, murder is highly unusual (Shortland, 2017). [TODO: insert concluding sentence?]
+
+This striking relative stability of criminal kidnappings is a result of having a competitive market of insurers under one governing body. [TODO: insert footnote about how kidnappings are underreported] Recent research has shown that there is just a single source of kidnap insurance globally: Lloyd's of London (Shortland, 2016). While the market appears to be highly competitive, with about 20 insurers competing for business, they are all connected to Lloyd's in some way. Lloyd's is not an insurance company, but an insurance market where members join together as syndicates. For example, brokers and coverholders act on behalf of potential customers and work with underwriters in the Lloyd's Underwriting Room to obtain quotes. Each syndicate's underwriters price the risk and decide what will be covered. Members of Lloyd's provide capital, which Lloyd's holds in trust. These firms operated based on strict rules, that set Lloyd's as a governing body. The information sharing within Lloyd's provides huge value to its syndicates, and is crucial for business. Each syndicate has 1-2 kidnap specialists who develop deep knowledge in a ``boy-to-man'' profession. Since the underwriters are physically congregated in an underwriting room, syndicates can share information in passing and over lunch (Shortland, 2017). However, information sharing is extremely limited outside of Lloyd's (Guardian, 2014). Membership in Lloyd's is renewed each year, and Lloyd's can close any syndicate that acts against the market's interest. As a result, the syndicates adopt consistent practices that do not jeopardize their membership in Lloyd's (Stringham, 2015). Like in organized crime, where non-cooperation yields high risk of violence (Leeson, 2011), non-cooperation in Lloyd's results in a high risk of suffering losses from being excluded from the market.
 
 [lloyd's infographic]
 
-Lloyd's serves as a governing role 
+As seen with terrorist and pirate kidnappings, externalities from poorly-managed negotiations include high ransoms, which in turn encourage more kidnappers to enter the market with high payout expectations (De Groot et al., 2010). These externalities affect both social welfare as well as insurers, who are priced out of the market when they cannot cover high ransom costs nor sell insurance with adequately high premia. Insurers of kidnap for ransom are thus motivated to internalize these externalities. They do so by preventing moral hazard and lowering ransom costs. They stipulate that the clients must first raise the ransom payment amount themselves, then receive reimbursement after payment (Shortland, 2016). Furthermore, insurers often provide training to their clients on how to minimize risk in target countries, and perform security checks in their covered areas of operation (Business Insurance, 2008). Insurers also control knowledge of insurance coverage by forbidding client firms from discussing insurance with their employees (Marsh, 2011). By taking these steps to prevent moral hazard, insurers minimize the probability of kidnap. Another way to minimize this likelihood is to decrease ransoms. This is done through expert negotiators and consultants at crisis response companies hired by the insurer. In the event of kidnap, experienced negotiators advise the victim stakeholder on how to negotiate. They ensure that the client does not settle too early and too high, especially when they are cash-rich and willing, and despite the evidence showing that it results in a faster release, lower negotiation costs, and lower risks for the hostage (Ambrus et al., 2014). Ultimately, maintaining a low ransom equilibrium is of the utmost importance, to prevent a vicious cycle of more kidnappers entering the market, higher ransom expectations and demands, and if paid, a continued increase in kidnapping (Shortland 2016, UN 2013, Wright 2009). The result would be lower social welfare and insurers being priced out of the market. 
 
-As seen with terrorist and pirate kidnappings, externalities of poorly-managed negotiations include high ransoms, which in turn encourage more kidnappers to enter the market with high payout expectations. These externalities affect both social welfare as well as insurers, who would be priced out of the market. Insurers of kidnap for ransom are thus incentivized to internalize these externalities. They do so by preventing moral hazard and lowering ransom costs. They stipulate that the clients must first raise the ransom payment amount themselves, then receive reimbursement after payment (Shortland, 2016). Furthermore, insurers often provide training to their clients on how to minimize risk in target countries, and perform security checks in their covered areas of operation (Business Insurance, 2008). Insurers also control knowledge of insurance coverage by forbidding client firms from discussing insurance with their employees (Marsh, 2011). By taking these steps to prevent moral hazard, insurers minimize the probability of kidnap. Another way to minimize this likelihood is to decrease ransoms. This is done through expert negotiators and consultants at crisis response companies hired by the insurer. In the event of kidnap, experienced negotiators advise the victim stakeholder on how to negotiate. They ensure that the client does not settle too early and too high, especially when they are cash-rich and willing, and despite the evidence showing that it results in a faster release, lower negotiation costs, and lower risks for the hostage (Ambrus et al., 2014). Ultimately, maintaining a low ransom equilibrium is of the utmost importance, to prevent a vicious cycle of more kidnappers entering the market, higher ransom expectations and demands, and if paid, a continued increase in kidnapping (Shortland 2016, UN 2013, Wright 2009). The result would be lower social welfare and insurers being priced out of the market. 
+This paper focuses in on negotiation-- specifically its duration and quality. If negotiations are too long in an effort to maximally decrease a ransom, kidnappers respond with threats of and actual violence, as ``myopic insurers could cut short ransom negotiations to save themselves time, hassle, and cost [of hiring consultants] and reimburse high ransoms without 'punishment''' (Shortland, 2016). However, membership in Lloyd's prevents this. Professional negotiators can remain incredibly patient and spend weeks and months leveling with kidnappers, especially when the kidnappers' expectations are high. 
 
-This paper focuses in on negotiation-- its duration and quality. If negotiations are too long in an effort to maximally decrease a ransom, kidnappers respond with threats of and actual violence (Shortland, 2016). ``Myopic insurers could cut short ransom negotiations to save themselves time, hassle, and cost [of hiring consultants] and reimburse high ransoms without ``punishment''.'' However, membership in Lloyd's prevents this.
+In addition to qualitative research, kidnapping and insurance have also been examined in a game theoretical framework. Selten (1977) modeled a 2-player game between a kidnapper and victim's family, showing that kidnapping is rational only when the kidnapper has a high willingness to kill, but not exceeding a certain threshold. Crettez and Deloche (2009) builds on Selten's model, capuring the kidnapping for non-monetary ransoms in the context of assasination of prominent political figures. Lapan and Sandler (1988) model kidnapping between the kidnapper and government instead, showing a multiperiod sequential game that includes reputational effects for the government, which influences terrorists' views on their willingness to grant future concessions. In examining when the government should pre-commit to not negotiating, they find that not negotiating should generally be avoided, which is consistent with empirical studies [TODO: add more about this?]. Fink and Pringle (2014) build upon these previous papers to include kidnap for ransom insurance, and explore under what conditions insurance should be purchased. In a 2 player game between a kidnapper and the victim's family, they find that a risk-averse family benefits from ransom insurance while most kidnappers do not benefit from it. They also show that increasing `successful' kidnappings increase the likelihood of kidnap, which makes insurance both more expensive and less attractive. Therefore, insurance companies should use divert some of their resources to risk reduction efforts, as they clearly do in the real world.
 
-- Mostly government involvement is limited to (legally uninsurable) terrorist kidnaps, but ransom demands in the criminal sector are rising in response to terrorist successes. This has been contained by increased patience on the side of private negotiators, spending additional weeks and months convincing kidnappers that private ransoms will not be comparable to government-funded ransoms. With the inex- orable rise of government-negotiated ransoms, opportunists and criminals are therefore beginning to pass hostages to terrorists (Interviews IV, V; Safer Yemen, 2014). For citizens of non-negotiating nations (such as the United States and United Kingdom) this is often fatal, making them unemployable in many areas of the world. As long as some governments enter the hostage trade, the legal distinction between insuring “terrorist” and “criminal” kidnaps, therefore, has unintended and counterproductive consequences for hostages, firms, NGOs, and international efforts to reduce terrorist financing.
-
-In addition to qualitative research, kidnapping and insurance have also been examined in a game theoretical framework. Selten (1977) modeled a 2-player game between a kidnapper and victim's family, showing that kidnapping is rational only when the kidnapper has a high willingness to kill, but not exceeding a certain threshold. Crettez and Deloche (2009) builds on Selten's model, capuring the kidnapping for non-monetary ransoms in the context of assasination of prominent political figures. They find that [TODO: clarify what they find]. Lapan and Sandler (1988) model kidnapping between the kidnapper and government instead, showing a multiperiod sequential game that includes reputational effects for the government, which influences terrorists' views on their willingness to grant future concessions. In examining when the government should pre-commit to not negotiating, they find that not negotiating should generally be avoided, which is consistent with empirical studies [TODO: add more about this?]. Fink and Pringle (2014) build upon these previous papers to include kidnap for ransom insurance, and explore under what conditions insurance should be purchased. In a 2 player game between a kidnapper and the victim's family, they find that a risk-averse family benefits from ransom insurance while most kidnappers do not benefit from it. They also show that increasing `successful' kidnappings increase the likelihood of kidnap, which makes insurance both more expensive and less attractive. Therefore, insurance companies should use divert some of their resources to risk reduction efforts, as they clearly do in the real world.
-
-This paper seeks to build upon the recent game theoretic and political science research around kidnap for ransom insurance. We model a game between an insurer and its customer (firm or family), showing cases both with and without the Lloyd's market. In the former, individual insurance firms within Lloyd's are aware that they are influencing the average ransom, depending on how hard they negotiate. We show that these insurers maximize utility
-
- the private governance structure of . We have a 2 player game representing the 
-
-[brief outline of paper and how it's different]
-
+This paper seeks to build upon the recent game theoretic and political science research around kidnap for ransom insurance. We model a game between an insurer and its customer (a firm or family), showing cases both with and without the Lloyd's market. In the former, individual insurance firms within Lloyd's are aware that they are influencing the average negotiation (and therefore ransom levels), and cooperate negotiate at a set, average level. Firms that are not under a private governance structure, on the other hand, are not setting the private level of negotiation to equal the average, and are instead taking that environmental level as given and optimizing with only themselves in mind. We show that consumer welfare is maximized in a Lloyd's setting.
 
 \section{The Model}
 
-We model kidnapping as a two person game between the insurer and the firm, who purchases insurance for its employees. At the first stage, the insurer competes in a perfectly competitive market and price their premium, which also set their level of service through negotiation. The firm decides whether or not to purchase insurance and at what level. Then there are two moves by nature: a firm's employee is kidnapped with probability $p$, and if kidnapped, killed with probability $q$[Q: can q be both a function of N and nature?]. (Figure 1)
-
-[insert sketch of schematic model]
-
-The insurer's premium $P(p, R)$ is a function the probability of being kidnapped $p$ and the ransom level $R$. We assume that $\frac{\partial R}{\partial P} > 0$ and $\frac{\partial p}{\partial R} > 0$ and $P > 0$. The ransom $R(N, \overline{N})$, paid out by insurers to kidnappers, is a function of how much they themselves negotiate, as well as the average level of negotiation by other insurers: [TODO: insert footnote to elaborate on this] $N$ is the level of negotiation, which represents the effort and resources the insurer is willing to put into extracting a hostage, and $\overline{N}$ is the environmental level of negotiation, which represents the average amount insurers negotiate.[Q: is it insurers or is consultants better here?] Assume that $\frac{\partial N}{\partial R} < 0$ and $\frac{\partial \overline{N}}{\partial R} < 0$. At the time of pricing their premia, insurance companies decide on a set level of negotiation $N$, which in turn decide their premium $P(p, R(N, \overline{N}))$.
-
-The firm begins with initial wealth $W$, and pays the premium $P$ when purchasing insurance. In the case of kidnapping, the firm suffers a cost $K$. In the case of death, they suffer cost $D$. The firm's employee also faces a probability of death $q(N)$, which is a function of how hard the insurer negotiates $N$. Assume that $\frac{\partial N}{\partial q} > 0$.
-
-The firm has von Neumann-Morgenstern preferences with expected utility $u$ in this game given the 3 possibile outcomes /em not kidnapped, kidnapped and freed, and kidnapped and killed:
-
+We model kidnapping as a two person game between the insurer and the firm, who purchases insurance for its employees. At the first stage, the insurer competes in a perfectly competitive market and price their premia, which also set their level of service through negotiation. The firm decides whether or not to purchase insurance and at what level. Then there are two moves by nature: a firm's employee is kidnapped with probability $p$, and if kidnapped, killed with probability $q$. We assume:
 \begin{align*}
-u_{firm} = (1-p)*U(W-P) + p*(1-q)*U(W-P-K) + p*q*U(W-P-D)
+\begin{forest}
+  [\textbf{Insurers}
+    [][] [\textbf{Customer} [] []
+          [\textbf{Nature} 
+          [\textbf{Nature}, edge label={node[midway,left,font=\scriptsize]{Client kidnapped with probability $p$}} 
+              [{$(W-P-K)$}, edge label={node[midway,left,font=\scriptsize]{Client not killed with probability $1-q$}}] 
+              [{$(W-P-D)$}, edge label={node[midway,right,font=\scriptsize]{Client killed with probability $q$}}]
+          ],edge label={node[midway,left,font=\scriptsize]{Purchases insurance with premium $P$}} 
+          [{$(W-P)$}, edge label={node[midway,right,font=\scriptsize]{Client not kidnapped with probability $1-p$}}
+          ]
+      ] [] [,edge label={node[midway,right,font=\scriptsize]{Chooses premium $P$}}]
+    ] [] [,edge label={node[midway,right,font=\scriptsize]{Compete in market to price premium $P$}}]
+  ]
+\end{forest}
 \end{align*}
 
-\subsection{Baseline}
+The insurer's premium $P(p, R)$ is a function the probability of being kidnapped $p$ and the ransom level $R$. The probability of kidnap $p(\bar{N})$ is a function of the average level of negotiation by other insurers in the market, $\bar{N}$, as quick and easy negotiations motivate more kidnappings (Shortland, 2016). The ransom $R(N, \bar{N})$, paid out by insurers to kidnappers, is a function of how much insurers negotiate, as well as the average level of negotiation by other insurers in the market.\footnote{$N$ is the individual level of negotiation, which represents the effort and resources the insurer is willing to put into extracting a hostage, and $\bar{N}$ is the environmental level of negotiation, which represents the average amount insurers in the market negotiate.} At the time of pricing their premia, insurance companies decide on a set level of negotiation $N$, which in turn decide their premium $P(p(\bar{N}), R(N, \bar{N}))$.
 
-Suppose there is 1 consumer and 1 insurance company. The consumer problem would then be:
+The firm begins with initial wealth $W$, and pays the premium $P$ when purchasing insurance. In the case of kidnapping, the firm suffers a cost $K$. In the case of death, they suffer cost a $D$. The firm's employee faces a probability of death $q(N)$, which is a function of $N$, or how hard the insurer negotiates. 
 
+The firm has von Neumann-Morgenstern preferences with expected utility $EU$ in this game given the 3 possible outcomes--- not kidnapped, kidnapped and freed, and kidnapped and killed:
 \begin{align*}
-max_{N}u(N) &= (1-p)*U(W-P(p, R(N))) + p*(1-q(N))*U(W-P(p, R(N))-K) + p*q(N)*U(W-P(p, R(N))-D) \\
-\frac{\partial N}{\partial u} &= (1-p)*\frac{\partial P}{\partial U}*\frac{\partial R}{\partial P}*\frac{\partial N}{\partial R} + 
+EU = (1-p)U(W-P) + p(1-q)U(W-P-K) + pqU(W-P-D)
 \end{align*}
 
-In this case, there is no environmental $\overline{N}$. However, in reality the market is not actually structured like this, because it overlooks the externalities 
+\subsection{Assumptions}
+
+Premium, $P(p(\bar{N}), R(N, \bar{N}))$, is a function of probability of kidnap and ransom. Assume that $\frac{\partial P}{\partial R} > 0$ and $\frac{\partial P}{\partial p} > 0$, since premiums go up along with ransom amounts and probability of kidnap. We assume that higher individual and environmental levels of negotiation drive ransoms down, so $\frac{\partial R}{\partial \bar{N}} < 0$ and $\frac{\partial R}{\partial N} < 0$. We also assume that $\frac{\partial p}{\partial \bar{N}} \leq 0$, since higher environmental levels of negotiation dissuade criminals from kidnapping. 
+
+Given that premium is a function of $p$ and $R$, which are both functions of $\bar{N}$, we can assume that $\frac{\partial P}{\partial \bar{N}} = \frac{\partial p}{\partial \bar{N}} + \frac{\partial R}{\partial \bar{N}}$. Since both $\frac{\partial p}{\partial \bar{N}}$ and $\frac{\partial R}{\partial \bar{N}}$ are less than $0$, $\frac{\partial P}{\partial \bar{N}} < 0$. In other words, a higher average level of negotiation results in a lower premium, as both kidnap probability and ransom levels decrease.
+
+Probability of death, $q(N, \bar{N})$ is a function of individual and environmental negotiation levels $\bar{N}$. Assume that higher average negotiations imply that kidnappers are able to tolerate higher levels of individual negotiation, so the probability of death decreases. Thus $\frac{\partial q}{\partial \bar{N}} < 0$. However, $\frac{\partial q}{\partial N} > 0$, since negotiating harder and longer on an individual level results in a higher risk of death.
+
+\subsection{Baseline Problem}
+
+Suppose first that there is 1 consumer and 1 insurance company in the market. Given that there is only one insurer in the market, the average level of negotiation is set by the insurer so $\bar{N} = N$. The consumer problem would then be:
+
+\begin{align*}
+EU(N) &= (1-p)U(W-P(p, R(N))) \\
+&+ p(1-q(N))U(W-P(p, R(N))-K) \\
+&+ pq(N)U(W-P(p, R(N))-D)
+% \frac{\partial N}{\partial u} &= (1-p)\frac{\partial N}{\partial U} \\
+% &+ p(-\frac{\partial N}{\partial q}U(W-P-K) + (1-q)\frac{\partial N}{\partial U}) \\
+% &+ p(\frac{\partial N}{\partial q}U(W-P-D) + q\frac{\partial N}{\partial U})
+\end{align*}
+
+In this case, there is no environmental $\bar{N}$ since only one insurer exists in the market. However, in reality the market experiences significant spillover effects that each individual insurer has on the other. In order to capture such externalities, we can model the problem that includes an environmental $\bar{N}$ as given.
 
 \subsection{Competitive Market Problem}
 
-What do these externalities look like?
+With each negotiation, insurers contribute to the average level of negotiation in a particular area, which in turn influences ransom levels $R$. Due to information sharing between criminals, previous levels of ransom and negotiation influence the desirability of engaging in kidnapping. Quick and easy negotiations and high payouts compel more kidnapper to enter the market with higher expectations for ransom. On the other hand, long and strenuous negotiations with low payouts can maintain a more stable ransom level and low frequencies of kidnapping. In this model, $\bar{N}$ captures these externalities: ransom $R$ is determined not only by an individual insurer's negotiation but the environmental levels as well. If the precedent for negotiation is low, where insurers are willing to settle early and pay higher ransoms, kidnappers enter negotiations with higher expectations and would be unwilling to settle for a lower amount than if previous victim stakeholders had negotiated harder for lower ransoms. 
 
-[TODO: qualitatively describe what they look like and introduce it in the form of N bar]
+The consumer problem is then:
+\begin{align*}
+Eu(N) &= (1-p)U(W-P(p, R(N, \bar{N}))) \\
+&+ p(1-q(N))U(W-P(p, R(N, \bar{N}))-K) \\
+&+ pq(N)U(W-P(p, R(N, \bar{N}))-D)
+% \frac{\partial N}{\partial u} &= (1-p)\frac{\partial N}{\partial U} \\
+% &+ p(-\frac{\partial N}{\partial q}U(W-P-K) + (1-q)\frac{\partial N}{\partial U}) \\
+% &+ p(\frac{\partial N}{\partial q}U(W-P-D) + q\frac{\partial N}{\partial U})
+\end{align*}
 
-need more than just the baseline problem. need self-consistency: there are many firms simulataneously solving this problem, where they collectively determine what N bar is, which then collectively determines what the original problem is.
+In this setup, there are many firms solving the problem simultaneously of which level $N$ to choose. Through solving their own problem and choosing a level $N^*$ given an $\bar{N}$, they collectively contribute back to the environmental $\bar{N}$, which then influences the level of N that they choose.
 
-[TODO: insert diagram about how N bar feeds back into the problem]
+\begin{center}
+\begin{tikzpicture}[
+    node distance=12mm,
+    >=stealth, auto,
+every state/.style={draw=none, inner sep=0pt}
+                ]
+\node[state] (q14) {$\bar{N}$};
+\node[state] (q12) [above right=of q14] {$\underset{N}{max} Eu(N, \bar{N})$};
+\node[state] (q23) [below right=of q12] {$N^* (\bar{N})$};
+    \begin{scope}[bend left]%
+\path[->]   (q14) edge node {} (q12)
+            (q12) edge node {} (q23)
+            (q23) edge node {} (q14);
+    \end{scope}
+\end{tikzpicture}
+\end{center}
 
-- many N bars
+[TODO: add title/caption]
 
-Looking for an equilibrium defined as a perceived environment, where when people optimize given that environment, the real environment agrees with the perceived --> aka perceptions are rational
+Given any perceived environmental $\bar{N}$, insurers optimize at $N^*$ in response as they price their premium. After iterations through this cycle, equilibrium is reached when the insurer's own level of negotiation equals the average environmental level, $\bar{N} = N^*(\bar{N})$, resulting in self-consistency. In other words, the equilibrium here is when the perceived environment $\bar{N}$ aligns with the real environment--- the insurer's own actions--- so that perceptions are rational. (not sure if this makes sense)
 
-If I pick the right N bar to start with so it's in equilibrium, then the previous analysis is already solved. Just need to pick the right N bar. 
+If the insurer were to pick the right $N$ initially to be in equilibrium, then this cycle would already be solved. This would result in a more efficient outcome, where individuals already know which $N$ to choose, instead of constantly adjusting and changing $\bar{N}$. 
 
-The issue is that this is ineffient. Individuals influence the environment which then influences other firms, but firms will not take into account that influence, so they will undernegotiate.
+% Individuals influence the environment which then influences other firms, but firms will not take into account that influence, so they will undernegotiate.
 
 \subsection{Lloyd's Problem}
 
-Which is the Lloyd's problem! 
+In a private governance structure, the Lloyd's market facilitates cooperation on $N$. Insurers who do not reach a certain standard of negotiation risk getting kicked out of the market, losing access to an essential web of information, the Lloyd's brand, and its "chain of security" fund structure (). Incentivized to follow the Lloyd's standard, insurers set their private $N$ to equal the market standard. By collectively choosing the same $N$, the environmental level of negotiation equals the private level: $N = \bar{N}$. The maximization problem is therefore:
+\begin{align*}
+\underset{N, \bar{N}}{max} (1-p)U(W-P) + p(1-q)U(W-P-K) + pqU(W-P-D) \qquad s.t. \; N = \bar{N}
+\end{align*}
 
-\section{Analysis}
+\section{Analysis}  
 
-\subsection{Qualitative}
+\subsection{}
 
-Compare competitive market to lloyd's as a theorem
+Proposition: Let $\bar{N}^*$ denote the competitive equilibrium. Starting at the competitive equilibrium, it is welfare improving to increase $N$, so $\frac{d}{dN}EU(N,\bar{N}(N))_{\bar{N}^*} > 0$.
 
-Show that in FOC for Lloyd's problem, dU/dN > 0 (as negotiation increases, utility increases)
-Show that you would want to increase N when jumping from non-Lloyd's to Lloyd's
+\begin{proof}
 
-\subsection{Quantitative}
+Lemma: $\frac{\partial EU}{\partial \bar{N}} > 0$
 
-Show pictures
+Observe that $\frac{\partial EU}{\partial \bar{N}} = \frac{\partial F}{\partial P} \frac{\partial P}{\partial \bar{N}} + \frac{\partial F}{\partial p} \frac{\partial p}{\partial \bar{N}} + \frac{\partial F}{\partial q} \frac{\partial q}{\partial \bar{N}}$. We know that $\frac{\partial F}{\partial P} < 0, \frac{\partial F}{\partial p} < 0, and \frac{\partial F}{\partial q} < 0$, and $\frac{\partial P}{\partial \bar{N}} <0, \frac{\partial p}{\partial \bar{N}} < 0, \frac{\partial q}{\partial \bar{N}} < 0$. As a result, all terms in  $\frac{\partial EU}{\partial \bar{N}}$ are positive, which makes $\frac{\partial EU}{\partial \bar{N}} > 0$.
 
-Collective recognition of negative externality, needs way to internalize externality
+The theorem follows from two observations: the competitive term $\frac{\partial EU(\bar{N}^*, \bar{N}^*)}{\partial N}$ is 0 by the first order conditions from the competitive problem. The lemma shows that $\frac{\partial EU}{\partial \bar{N}}$ is positive. Since $\frac{d}{dN}EU(N,\bar{N}(N))_{\bar{N}^*} = \frac{\partial EU(\bar{N}^*, \bar{N}^*)}{\partial N} + \frac{\partial EU}{\partial \bar{N}}$.
+\end{proof}
 
-We need to fix that problem, here's how Lloyd's solves it...
+
+- have a section for assumptions: why and why they are true
 
 \section{Discussion}
 
 Suggestions:
 
-Incorporate possibility addressing adverse selection or moral hazard in model
-Criminals also play a role:
-Criminals carry out important functions in kidnap for ransom governance: in search of private profit they “monitor” the effectiveness of prevention measures and the quality of negotiators.
+- Incorporate possibility addressing adverse selection or moral hazard in model \\
+- Criminals carry out important functions in kidnap for ransom governance: in search of private profit they “monitor” the effectiveness of prevention measures and the quality of negotiators.
+- model assumes that every kidnapped person is insured?
+\\
 
+[TODO: import bibtex]
 
 
 \end{document}
