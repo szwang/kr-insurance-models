@@ -1,6 +1,6 @@
 \documentclass[12pt]{article}
  
-\usepackage[margin=1.15in]{geometry} 
+\usepackage[margin=1in]{geometry} 
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{tikz}
 \usepackage[linguistics]{forest}
@@ -11,6 +11,15 @@
 \usepackage{setspace}
 \usepackage{indentfirst}
 \usepackage[linguistics]{forest}
+\usepackage{graphicx}
+
+% \usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
 
 \usetikzlibrary{arrows,automata,positioning}
 
@@ -21,22 +30,24 @@
 
 % \let\pgfmathMod=\pgfmathmod\relax
 
-\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
-\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
-\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
-\newenvironment{problem}[2][Problem]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
-\newenvironment{question}[2][Question]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
-\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+% \newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+% \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+% % \newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+% % \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+% \newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+% \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+% \newenvironment{problem}[2][Problem]{\begin{trivlist}
+% \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+% \newenvironment{question}[2][Question]{\begin{trivlist}
+% \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+% \newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+% \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+% \newtheorem{lemma}[theorem]{Lemma}
 
 \newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
 
-\renewcommand{\thesubsubsection}{\alph{subsubsection})}
+% \renewcommand{\thesubsubsection}{\alph{subsubsection})}
 \makeatletter
 \renewcommand{\p@subsubsection}{\thesubsection.\protect\eatbracket}
 \makeatother
@@ -99,7 +110,7 @@ We model kidnapping as a two person game between the insurer and the firm, who p
 \begin{align*}
 \begin{forest}
   [\textbf{Insurers}
-    [][] [\textbf{Customer} [] []
+    [][] [\textbf{Consumer} [] []
           [\textbf{Nature} 
           [\textbf{Nature}, edge label={node[midway,left,font=\scriptsize]{Client kidnapped with probability $p$}} 
               [{$(W-P-K)$}, edge label={node[midway,left,font=\scriptsize]{Client not killed with probability $1-q$}}] 
@@ -107,11 +118,13 @@ We model kidnapping as a two person game between the insurer and the firm, who p
           ],edge label={node[midway,left,font=\scriptsize]{Purchases insurance with premium $P$}} 
           [{$(W-P)$}, edge label={node[midway,right,font=\scriptsize]{Client not kidnapped with probability $1-p$}}
           ]
-      ] [] [,edge label={node[midway,right,font=\scriptsize]{Chooses premium $P$}}]
-    ] [] [,edge label={node[midway,right,font=\scriptsize]{Compete in market to price premium $P$}}]
+      ] [] [,edge label={node[midway,right,font=\scriptsize]{Chooses $N$ and associated $P(N)$}}]
+    ] [] [,edge label={node[midway,right,font=\scriptsize]{Compete in market to price premium schedule $P(N)$}}]
   ]
 \end{forest}
 \end{align*}
+
+Under a competitive market without Lloyd's, given a schedule of premia $P(N)$, consumers choose the level of negotiation $N$ that they desire, contributing to the average level of negotiation $\bar{N}$. Under Lloyd's, $N$ is a fixed value where $N = \bar{N}$ and insurers compete to price premia given that level of $N$.
 
 The insurer's premium $P(p, R)$ is a function the probability of being kidnapped $p$ and the ransom level $R$. The probability of kidnap $p(\bar{N})$ is a function of the average level of negotiation by other insurers in the market, $\bar{N}$, as quick and easy negotiations motivate more kidnappings (Shortland, 2016). The ransom $R(N, \bar{N})$, paid out by insurers to kidnappers, is a function of how much insurers negotiate, as well as the average level of negotiation by other insurers in the market.\footnote{$N$ is the individual level of negotiation, which represents the effort and resources the insurer is willing to put into extracting a hostage, and $\bar{N}$ is the environmental level of negotiation, which represents the average amount insurers in the market negotiate.} At the time of pricing their premia, insurance companies decide on a set level of negotiation $N$, which in turn decide their premium $P(p(\bar{N}), R(N, \bar{N}))$.
 
@@ -124,100 +137,125 @@ EU = (1-p)U(W-P) + p(1-q)U(W-P-K) + pqU(W-P-D)
 
 \subsection{Assumptions}
 
-Premium, $P(p(\bar{N}), R(N, \bar{N}))$, is a function of probability of kidnap and ransom. Assume that $\frac{\partial P}{\partial R} > 0$ and $\frac{\partial P}{\partial p} > 0$, since premiums go up along with ransom amounts and probability of kidnap. We assume that higher individual and environmental levels of negotiation drive ransoms down, so $\frac{\partial R}{\partial \bar{N}} < 0$ and $\frac{\partial R}{\partial N} < 0$. We also assume that $\frac{\partial p}{\partial \bar{N}} \leq 0$, since higher environmental levels of negotiation dissuade criminals from kidnapping. 
+Premium, $P(p(\bar{N}), R(N, \bar{N}))$, is a function of probability of kidnap and ransom. Assume that $\frac{\partial P}{\partial R} > 0$ and $\frac{\partial P}{\partial p} > 0$, since premia go up along with ransom amounts and probability of kidnap. We assume that higher individual and environmental levels of negotiation drive ransoms down, so $\frac{\partial R}{\partial \bar{N}} < 0$ and $\frac{\partial R}{\partial N} < 0$. We also assume that $\frac{\partial p}{\partial \bar{N}} \leq 0$, since higher environmental levels of negotiation dissuade criminals from kidnapping. 
 
-Given that premium is a function of $p$ and $R$, which are both functions of $\bar{N}$, we can assume that $\frac{\partial P}{\partial \bar{N}} = \frac{\partial p}{\partial \bar{N}} + \frac{\partial R}{\partial \bar{N}}$. Since both $\frac{\partial p}{\partial \bar{N}}$ and $\frac{\partial R}{\partial \bar{N}}$ are less than $0$, $\frac{\partial P}{\partial \bar{N}} < 0$. In other words, a higher average level of negotiation results in a lower premium, as both kidnap probability and ransom levels decrease.
+Given that premium is a function of $p$ and $R$, both functions of $\bar{N}$, we can assume that $\frac{\partial P}{\partial \bar{N}} = \frac{\partial p}{\partial \bar{N}} + \frac{\partial R}{\partial \bar{N}}$. Since both $\frac{\partial p}{\partial \bar{N}}$ and $\frac{\partial R}{\partial \bar{N}}$ are less than $0$, $\frac{\partial P}{\partial \bar{N}} < 0$. In other words, a higher average level of negotiation results in a lower premium, as both kidnap probability and ransom levels decrease.
 
 Probability of death, $q(N, \bar{N})$ is a function of individual and environmental negotiation levels $\bar{N}$. Assume that higher average negotiations imply that kidnappers are able to tolerate higher levels of individual negotiation, so the probability of death decreases. Thus $\frac{\partial q}{\partial \bar{N}} < 0$. However, $\frac{\partial q}{\partial N} > 0$, since negotiating harder and longer on an individual level results in a higher risk of death.
 
-\subsection{Baseline Problem}
+Finally, we assume that an increase in the premium, probability of kidnapping, or probability of death result in a lower expected utility for the firm, so $\frac{\partial EU}{\partial P} < 0, \frac{\partial EU}{\partial p} < 0$, and $\frac{\partial EU}{\partial q} < 0$.
 
-Suppose first that there is 1 consumer and 1 insurance company in the market. Given that there is only one insurer in the market, the average level of negotiation is set by the insurer so $\bar{N} = N$. The consumer problem would then be:
+\subsection{Competitive Equilibrium}
 
+With each negotiation, insurers contribute to the average level of negotiation in a particular area, which in turn influences ransom levels $R$. Due to information sharing between criminals, previous levels of ransom and negotiation influence the desirability of engaging in kidnapping. Quick and easy negotiations and high payouts compel more kidnappers to enter the market with higher expectations for ransom. On the other hand, long and strenuous negotiations with low payouts can maintain a more stable ransom level and low frequencies of kidnapping. In this model, $\bar{N}$ captures these externalities: ransom $R$ is determined not only by an individual insurer's negotiation but the environmental levels as well. If the precedent for negotiation $\bar{N}$ is low, where insurers are willing to settle early and pay higher ransoms, kidnappers enter negotiations with higher expectations and would be unwilling to settle for a lower amount than if previous victim stakeholders had negotiated harder for lower ransoms. On the other hand, if the average levels of negotiation are high, kidnappers anticipate a more arduous ransom negotiation process, thus decreasing ransom expectations in addition to their likelihood of kidnapping.
+
+Taking $\bar{N}$ as given, the consumer problem is then:
 \begin{align*}
-EU(N) &= (1-p)U(W-P(p, R(N))) \\
-&+ p(1-q(N))U(W-P(p, R(N))-K) \\
-&+ pq(N)U(W-P(p, R(N))-D)
-% \frac{\partial N}{\partial u} &= (1-p)\frac{\partial N}{\partial U} \\
-% &+ p(-\frac{\partial N}{\partial q}U(W-P-K) + (1-q)\frac{\partial N}{\partial U}) \\
-% &+ p(\frac{\partial N}{\partial q}U(W-P-D) + q\frac{\partial N}{\partial U})
+\underset{N}{max}EU(N, \bar{N}) = \underset{N}{max}&(1-p(\bar{N}))U(W-P(p(\bar{N}), R(N, \bar{N}))) \\
+&+ p(\bar{N})(1-q(N, \bar{N}))U(W-P(p(\bar{N}), R(N, \bar{N}))-K) \\
+&+ p(\bar{N})q(N, \bar{N})U(W-P(p(\bar{N}), R(N, \bar{N}))-D)
 \end{align*}
 
-In this case, there is no environmental $\bar{N}$ since only one insurer exists in the market. However, in reality the market experiences significant spillover effects that each individual insurer has on the other. In order to capture such externalities, we can model the problem that includes an environmental $\bar{N}$ as given.
-
-\subsection{Competitive Market Problem}
-
-With each negotiation, insurers contribute to the average level of negotiation in a particular area, which in turn influences ransom levels $R$. Due to information sharing between criminals, previous levels of ransom and negotiation influence the desirability of engaging in kidnapping. Quick and easy negotiations and high payouts compel more kidnapper to enter the market with higher expectations for ransom. On the other hand, long and strenuous negotiations with low payouts can maintain a more stable ransom level and low frequencies of kidnapping. In this model, $\bar{N}$ captures these externalities: ransom $R$ is determined not only by an individual insurer's negotiation but the environmental levels as well. If the precedent for negotiation is low, where insurers are willing to settle early and pay higher ransoms, kidnappers enter negotiations with higher expectations and would be unwilling to settle for a lower amount than if previous victim stakeholders had negotiated harder for lower ransoms. 
-
-The consumer problem is then:
-\begin{align*}
-Eu(N) &= (1-p)U(W-P(p, R(N, \bar{N}))) \\
-&+ p(1-q(N))U(W-P(p, R(N, \bar{N}))-K) \\
-&+ pq(N)U(W-P(p, R(N, \bar{N}))-D)
-% \frac{\partial N}{\partial u} &= (1-p)\frac{\partial N}{\partial U} \\
-% &+ p(-\frac{\partial N}{\partial q}U(W-P-K) + (1-q)\frac{\partial N}{\partial U}) \\
-% &+ p(\frac{\partial N}{\partial q}U(W-P-D) + q\frac{\partial N}{\partial U})
-\end{align*}
-
-In this setup, there are many firms solving the problem simultaneously of which level $N$ to choose. Through solving their own problem and choosing a level $N^*$ given an $\bar{N}$, they collectively contribute back to the environmental $\bar{N}$, which then influences the level of N that they choose.
-
-\begin{center}
-\begin{tikzpicture}[
-    node distance=12mm,
-    >=stealth, auto,
-every state/.style={draw=none, inner sep=0pt}
-                ]
-\node[state] (q14) {$\bar{N}$};
-\node[state] (q12) [above right=of q14] {$\underset{N}{max} Eu(N, \bar{N})$};
-\node[state] (q23) [below right=of q12] {$N^* (\bar{N})$};
-    \begin{scope}[bend left]%
-\path[->]   (q14) edge node {} (q12)
-            (q12) edge node {} (q23)
-            (q23) edge node {} (q14);
-    \end{scope}
-\end{tikzpicture}
-\end{center}
-
-[TODO: add title/caption]
-
-Given any perceived environmental $\bar{N}$, insurers optimize at $N^*$ in response as they price their premium. After iterations through this cycle, equilibrium is reached when the insurer's own level of negotiation equals the average environmental level, $\bar{N} = N^*(\bar{N})$, resulting in self-consistency. In other words, the equilibrium here is when the perceived environment $\bar{N}$ aligns with the real environment--- the insurer's own actions--- so that perceptions are rational. (not sure if this makes sense)
-
-If the insurer were to pick the right $N$ initially to be in equilibrium, then this cycle would already be solved. This would result in a more efficient outcome, where individuals already know which $N$ to choose, instead of constantly adjusting and changing $\bar{N}$. 
-
-% Individuals influence the environment which then influences other firms, but firms will not take into account that influence, so they will undernegotiate.
+For a given $\bar{N}$, consumers choose a premium that reflects their individual rational level of negotiation, $N^*(\bar{N})$. In competitive equilibrium, $\bar{N} = N$. We are therefore looking for an $\bar{N}$ so that when consumers solve this problem, the $N$ consumers choose is equal to the original $\bar{N}$, such that the market is in equilibrium and the consumers are solving their own optimization problem. At equilibrium, the actual $\bar{N}$ is equal to expectations. For any other set of expectations of $\bar{N}$, the actual behavior will not be consistent with those expectations. When making choices about $N$, consumers are predicting what $\bar{N}$ is going to be. In equilibrium, consumer expectation is correct. The solution to this problem is characterized by a first order condition at equilibrium where $\frac{\partial EU(\bar{N}^*, \bar{N}^*)}{\partial N} = 0$. We assume in competitive equilibrium, $N>0$ and $N=0$ is not optimum.
 
 \subsection{Lloyd's Problem}
 
-In a private governance structure, the Lloyd's market facilitates cooperation on $N$. Insurers who do not reach a certain standard of negotiation risk getting kicked out of the market, losing access to an essential web of information, the Lloyd's brand, and its "chain of security" fund structure (). Incentivized to follow the Lloyd's standard, insurers set their private $N$ to equal the market standard. By collectively choosing the same $N$, the environmental level of negotiation equals the private level: $N = \bar{N}$. The maximization problem is therefore:
+In a private governance structure, the Lloyd's market chooses a uniform level of negotiation, facilitating cooperation on $N$. Insurers who do not reach a certain standard of negotiation risk getting kicked out of the market, losing access to an essential web of information, the Lloyd's brand, and its "chain of security" fund structure (). Incentivized to follow the Lloyd's standard, insurers set their private $N$ to equal the market standard. By collectively choosing the same $N$, the environmental level of negotiation equals the private level: $N = \bar{N}$. The maximization problem is therefore:
 \begin{align*}
 \underset{N, \bar{N}}{max} (1-p)U(W-P) + p(1-q)U(W-P-K) + pqU(W-P-D) \qquad s.t. \; N = \bar{N}
 \end{align*}
 
-\section{Analysis}  
+\section{Analysis}
 
-\subsection{}
+\subsection{Lloyd's Market Equilibrium} 
 
-Proposition: Let $\bar{N}^*$ denote the competitive equilibrium. Starting at the competitive equilibrium, it is welfare improving to increase $N$, so $\frac{d}{dN}EU(N,\bar{N}(N))_{\bar{N}^*} > 0$.
+\noindent
+The following proposition characterizes the equilibrium under Lloyd's. 
+
+\bigskip
+\noindent
+\textbf{Proposition 1.} Let $\bar{N}^*$ denote the competitive equilibrium. Starting at the competitive equilibrium, it is welfare-improving to increase $N$, so $\frac{d}{dN}EU(N,\bar{N}(N))_{\bar{N}^*} > 0$ when $\bar{N}(N)\equiv N$.
+
+\bigskip
+
+\noindent
+Before turning to the proof, we prove the following lemma:
+
+\begin{lemma}
+$\frac{\partial EU}{\partial \bar{N}} > 0$
+\end{lemma}
 
 \begin{proof}
-
-Lemma: $\frac{\partial EU}{\partial \bar{N}} > 0$
-
-Observe that $\frac{\partial EU}{\partial \bar{N}} = \frac{\partial F}{\partial P} \frac{\partial P}{\partial \bar{N}} + \frac{\partial F}{\partial p} \frac{\partial p}{\partial \bar{N}} + \frac{\partial F}{\partial q} \frac{\partial q}{\partial \bar{N}}$. We know that $\frac{\partial F}{\partial P} < 0, \frac{\partial F}{\partial p} < 0, and \frac{\partial F}{\partial q} < 0$, and $\frac{\partial P}{\partial \bar{N}} <0, \frac{\partial p}{\partial \bar{N}} < 0, \frac{\partial q}{\partial \bar{N}} < 0$. As a result, all terms in  $\frac{\partial EU}{\partial \bar{N}}$ are positive, which makes $\frac{\partial EU}{\partial \bar{N}} > 0$.
-
-The theorem follows from two observations: the competitive term $\frac{\partial EU(\bar{N}^*, \bar{N}^*)}{\partial N}$ is 0 by the first order conditions from the competitive problem. The lemma shows that $\frac{\partial EU}{\partial \bar{N}}$ is positive. Since $\frac{d}{dN}EU(N,\bar{N}(N))_{\bar{N}^*} = \frac{\partial EU(\bar{N}^*, \bar{N}^*)}{\partial N} + \frac{\partial EU}{\partial \bar{N}}$.
+Observe that $\frac{\partial EU}{\partial \bar{N}} = \frac{\partial F}{\partial P} \frac{\partial P}{\partial \bar{N}} + \frac{\partial F}{\partial p} \frac{\partial p}{\partial \bar{N}} + \frac{\partial F}{\partial q} \frac{\partial q}{\partial \bar{N}}$. By assumption, $\frac{\partial F}{\partial P} < 0, \frac{\partial F}{\partial p} < 0, and \frac{\partial F}{\partial q} < 0$, and $\frac{\partial P}{\partial \bar{N}} <0, \frac{\partial p}{\partial \bar{N}} < 0, \frac{\partial q}{\partial \bar{N}} < 0$. As a result, all terms in  $\frac{\partial EU}{\partial \bar{N}}$ are positive, which makes $\frac{\partial EU}{\partial \bar{N}} > 0$.
 \end{proof}
 
+\noindent
+\textbf{Proof of Proposition 1:}
 
-- have a section for assumptions: why and why they are true
+\begin{proof}
+Observe that $\frac{d}{dN}EU(N,\bar{N}(N))_{\bar{N}^*} = \frac{\partial EU(\bar{N}^*, \bar{N}^*)}{\partial N} + \frac{\partial EU}{\partial \bar{N}}$. By the first order conditions from the competitive problem, the first term is 0. By Lemma 1, the second term is positive. 
+\end{proof}
+
+\subsection{Example of Competitive Equilibrium}
+
+Proposition 1 shows that starting at the competitive equilibrium, it is welfare-improving to increase N. In other words, the Lloyd's market enforces a higher N that results in a higher expected utility. To better illustrate this, we construct an example generated in Python.
+
+We use the von Neumann Morgenstern expected utility function and the following functional forms:
+\begin{align*}
+U(x) &= \sqrt[]{x} \\
+p(\bar{N}) &= \frac{10}{\bar{N} + 10} \\
+q(N, \bar{N}) &= ln(\frac{N}{150} + \frac{10}{\bar{N}}) \\
+R(N, \bar{N}) &= \frac{2000}{N + 1} + \frac{10000}{\bar{N} + 1} + 2000 \\
+P(p(\bar{N}), R(N,\bar{N})) &= pR 
+\end{align*}
+
+\subsubsection{Competitive Equilibrium}
+
+In the competitive market, the consumer faces a schedule of premia from insurers and takes $\bar{N}$ as given. The consumer chooses the level of negotiation $N$ in response that prices their premium $P(p(\bar{N}), R(N,\bar{N}))$ to maximize expected utility. The following figure depicts the consumer's rational level of negotiation $N^*$ for any given $\bar{N}$.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=13cm]{competitive.png}
+\end{figure}
+
+At equilibrium, $N^*(\bar{N}) = \bar{N}$. The intersection of the curve and 45-degree dotted line reveal the equilibrium point, where $N=7.37$ in this example. At negotiation levels less than 7.37, consumers would choose an $N$ such that $N > \bar{N}$. At $\bar{N} > 7.37$, however, the level of $N^*(\bar{N})$ that maximizes expected utility is less than $\bar{N}$. This suggests that if the average level of negotiation appears to be high, consumers can choose lower individual levels.
+
+We can also observe the level of expected utility the corresponds to this point, where the consumer takes $\bar{N} = 7.37$ as given.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=13cm]{comp_eu.png}
+\end{figure}
+
+\newpage
+At the maximum point where $\frac{\partial EU(\bar{N}^*, \bar{N}^*)}{\partial N} = 0$, $N^*(\bar{N})=7.37$, which equals $\bar{N}$. At this equilibrium, the behavior of individual firms is rational and the environment is consistent with their behavior.
+
+\subsubsection{Lloyd's Equilibrium}
+
+Under the Lloyd's market, it is always the case that $N = \bar{N}$, as the governing body sets the standards for negotiation. Therefore, insurers price their premium exactly where $N = \bar{N}$, and consumers choose whether or not to purchase insurance. Using this example, we can find the value $N$ that maximizes expected utility.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=10cm]{lloyds2.png}
+\end{figure}
+
+\newpage
+Under Lloyd's, the rational level of negotiation is $49.21$. Zooming out, we can observe the optimal $N$ under competitive equilibrium relative to Lloyd's. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=10cm]{lloyds1.png}
+\end{figure}
+
+This is a clear representation of Proposition 1. Given $\bar{N}(N)\equiv N$, at the individual rational $N$ the slope of expected utility is positive. It is thus welfare-improving to increase $N$--- higher negotiation levels under Lloyd's internalize externalities, resulting in higher expected utilities.
 
 \section{Discussion}
 
-Suggestions:
+This paper has examined the kidnapping and ransom insurance market under both a competitive market and single governing body, Lloyd's of London. We highlight the role of negotiation on both the individual and environmental levels in each case. The average environmental levels of negotiation $\bar{N}$ capture externalities associated with kidnapping and ransom insurance: for any given area, having a quick and easy average level of negotiation (i.e. a lower $\bar{N}$) result in a higher likelihood of kidnapping $p$ along with higher levels of ransom $R$ and possibility of death $q$. At competitive equilibrium, consumers take the environmental level of negotiation $\bar{N}$ as given, and choose their own negotiation level $N$ to reflect their expectations for $\bar{N}$, such that $N=\bar{N}$. At the Lloyd's equilibrium, $\bar{N}$ is determined by Lloyd's, and insurers set their $N$ to equal $\bar{N}$. Our analysis shows that at competitive equilibrium, consumers choose a lower level of $N$ that does not internalize the externalities associated with negotiation, whereas Lloyd's consumers subscribe to a level of $N$ that maximizes their expected utility.
 
-- Incorporate possibility addressing adverse selection or moral hazard in model \\
-- Criminals carry out important functions in kidnap for ransom governance: in search of private profit they “monitor” the effectiveness of prevention measures and the quality of negotiators.
-- model assumes that every kidnapped person is insured?
+Other features not captured in this model include addressing adverse selection and moral hazard. For example, insurers set different standards of training in their insurance contracts, to minimize moral hazard by customers who operate in high risk areas (Control Risks, 2010). Further extensions could also include applying a similar model to the context of terrorist kidnapping or piracy, incorporating the criminal as a player who "monitor" the effectiveness of negotiation and risk management measures (Shortland, 2017), or considering the impact of uninsured consumers in the market for more external validity.
+
+Our results show that Lloyd's of London serves as a highly effective governing body in the kidnapping and ransom insurance market. It not only enables fluid information sharing and secure capital flow, but also internalizes externalities through setting standards for negotiation. Lloyd's succeeds in areas where actual governments fail, and improves both the welfare of its consumers and society as a whole.
 \\
 
 [TODO: import bibtex]
